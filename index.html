@@ -81,28 +81,62 @@ document.addEventListener("keydown", function(e) {
             --glow-effect: 0 0 10px #0f0;
             --section-bg: rgba(0, 10, 0, 0.123);
             --skill-bg: rgba(0, 30, 0, 0.5);
+            transition: all 1s ease;
         }
         
-        /* Blue Theme */
-        .theme-blue {
-            --neon-green: rgb(255, 242, 0);
-            --dark-green: rgb(255, 242, 0);;
-            --matrix-bg: rgba(0, 10, 30, 0.7);
-            --terminal-border: rgb(255, 242, 0);;
-            --glow-effect: 0 0 10px rgb(255, 242, 0);;
-            --section-bg: rgba(0, 10, 30, 0.5);
-            --skill-bg: rgba(0, 20, 40, 0.5);
+        /* Green Theme (Default) */
+        .theme-green {
+            --neon-green: #0f0;
+            --dark-green: #0a0;
+            --matrix-bg: rgba(0, 15, 0, 0.201);
+            --terminal-border: #0f0;
+            --glow-effect: 0 0 10px #0f0;
+            --section-bg: rgba(0, 10, 0, 0.123);
+            --skill-bg: rgba(0, 30, 0, 0.5);
         }
         
         /* Red Theme */
         .theme-red {
             --neon-green: #f00;
             --dark-green: #a00;
-            --matrix-bg: rgba(30, 0, 0, 0.7);
+            --matrix-bg: rgba(15, 0, 0, 0.201);
             --terminal-border: #f00;
             --glow-effect: 0 0 10px #f00;
-            --section-bg: rgba(30, 0, 0, 0.5);
-            --skill-bg: rgba(40, 0, 0, 0.5);
+            --section-bg: rgba(10, 0, 0, 0.123);
+            --skill-bg: rgba(30, 0, 0, 0.5);
+        }
+        
+        /* Orange Theme */
+        .theme-orange {
+            --neon-green: #ff8c00;
+            --dark-green: #cc7000;
+            --matrix-bg: rgba(20, 10, 0, 0.201);
+            --terminal-border: #ff8c00;
+            --glow-effect: 0 0 10px #ff8c00;
+            --section-bg: rgba(15, 7, 0, 0.123);
+            --skill-bg: rgba(30, 15, 0, 0.5);
+        }
+        
+        /* Aqua Theme */
+        .theme-aqua {
+            --neon-green: #0ff;
+            --dark-green: #0aa;
+            --matrix-bg: rgba(0, 15, 15, 0.201);
+            --terminal-border: #0ff;
+            --glow-effect: 0 0 10px #0ff;
+            --section-bg: rgba(0, 10, 10, 0.123);
+            --skill-bg: rgba(0, 30, 30, 0.5);
+        }
+        
+        /* Yellow Theme */
+        .theme-yellow {
+            --neon-green: #ff0;
+            --dark-green: #aa0;
+            --matrix-bg: rgba(15, 15, 0, 0.201);
+            --terminal-border: #ff0;
+            --glow-effect: 0 0 10px #ff0;
+            --section-bg: rgba(10, 10, 0, 0.123);
+            --skill-bg: rgba(30, 30, 0, 0.5);
         }
         
         * {
@@ -122,7 +156,7 @@ document.addEventListener("keydown", function(e) {
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 1s ease;
         }
         
         /* Matrix Background */
@@ -133,7 +167,7 @@ document.addEventListener("keydown", function(e) {
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.5; /* Increased opacity */
+            opacity: 0.8; /* Increased opacity for better visibility */
         }
         
         /* Custom Cursor */
@@ -164,17 +198,17 @@ document.addEventListener("keydown", function(e) {
         .binary-trail {
             position: absolute;
             color: var(--neon-green);
-            font-size: 20px; /* Increased size */
-            opacity: 0.9; /* Increased opacity */
+            font-size: 24px; /* Increased size for better visibility */
+            opacity: 0.9; /* Increased opacity for better visibility */
             animation: fade 1s forwards;
             z-index: 999;
             pointer-events: none;
-            text-shadow: 0 0 5px var(--neon-green);
+            text-shadow: 0 0 8px var(--neon-green); /* Increased glow */
         }
         
         @keyframes fade {
             0% { opacity: 0.9; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(30px); } /* Longer trail */
+            100% { opacity: 0; transform: translateY(50px); } /* Longer trail */
         }
         
         /* Hacking Elements */
@@ -189,6 +223,7 @@ document.addEventListener("keydown", function(e) {
             animation: float 3s ease-in-out infinite;
             transform-origin: center;
             pointer-events: none;
+            font-size: 16px; /* Increased size */
         }
         
         @keyframes float {
@@ -208,7 +243,7 @@ document.addEventListener("keydown", function(e) {
             border-radius: 15px;
             box-shadow: 0 0 30px var(--neon-green);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 1s ease;
         }
         
         #main-terminal:hover {
@@ -1461,7 +1496,7 @@ document.addEventListener("keydown", function(e) {
         }
     </style>
 </head>
-<body style="user-select: none;">
+<body style="user-select: none;" class="theme-green">
     <canvas id="matrix"></canvas>
     
     <div id="cursor"></div>
@@ -1885,14 +1920,24 @@ document.addEventListener("keydown", function(e) {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            ctx.fillStyle = '#0f0';
+            ctx.fillStyle = document.body.classList.contains('theme-green') ? '#0f0' : 
+                           document.body.classList.contains('theme-red') ? '#f00' :
+                           document.body.classList.contains('theme-orange') ? '#ff8c00' :
+                           document.body.classList.contains('theme-aqua') ? '#0ff' :
+                           document.body.classList.contains('theme-yellow') ? '#ff0' : '#0f0';
+            
             ctx.font = `${fontSize}px 'Fira Code', monospace`;
             
             for (let i = 0; i < rainDrops.length; i++) {
                 const text = binaryChars.charAt(Math.floor(Math.random() * binaryChars.length));
                 const opacity = Math.min(1, rainDrops[i].position / 50);
                 
-                ctx.fillStyle = `rgba(0, 255, 0, ${opacity})`;
+                ctx.fillStyle = document.body.classList.contains('theme-green') ? `rgba(0, 255, 0, ${opacity})` : 
+                               document.body.classList.contains('theme-red') ? `rgba(255, 0, 0, ${opacity})` :
+                               document.body.classList.contains('theme-orange') ? `rgba(255, 140, 0, ${opacity})` :
+                               document.body.classList.contains('theme-aqua') ? `rgba(0, 255, 255, ${opacity})` :
+                               document.body.classList.contains('theme-yellow') ? `rgba(255, 255, 0, ${opacity})` : `rgba(0, 255, 0, ${opacity})`;
+                
                 ctx.fillText(rainDrops[i].char, i * fontSize, rainDrops[i].position * fontSize);
                 
                 if (rainDrops[i].position * fontSize > canvas.height && Math.random() > 0.975) {
@@ -1911,6 +1956,19 @@ document.addEventListener("keydown", function(e) {
         };
 
         setInterval(drawMatrix, 30);
+
+        // Automatic theme cycling every 4 seconds
+        const themes = ['theme-green', 'theme-red', 'theme-orange', 'theme-aqua', 'theme-yellow'];
+        let currentThemeIndex = 0;
+        
+        function cycleThemes() {
+            document.body.classList.remove(themes[currentThemeIndex]);
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            document.body.classList.add(themes[currentThemeIndex]);
+        }
+        
+        // Start cycling themes every 4 seconds
+        setInterval(cycleThemes, 4000);
 
         // Enhanced Custom Cursor with Binary Trail - Fixed positioning
         const cursor = document.getElementById('cursor');
@@ -2257,6 +2315,7 @@ document.addEventListener("keydown", function(e) {
             e.stopPropagation();
             
             // Switch to red theme
+            document.body.classList.remove('theme-green', 'theme-red', 'theme-orange', 'theme-aqua', 'theme-yellow');
             document.body.classList.add('theme-red');
             
             const output = document.createElement('div');
@@ -2438,21 +2497,22 @@ document.addEventListener("keydown", function(e) {
         // Theme switching functionality - Fixed implementation
         document.getElementById('close-btn').addEventListener('click', function(e) {
             e.stopPropagation(); // Prevent the click from bubbling up
-            document.body.classList.remove('theme-blue');
+            document.body.classList.remove('theme-green', 'theme-red', 'theme-orange', 'theme-aqua', 'theme-yellow');
             document.body.classList.add('theme-red');
             showNotification("Red theme activated", 2000);
         });
 
         document.getElementById('minimize-btn').addEventListener('click', function(e) {
             e.stopPropagation(); // Prevent the click from bubbling up
-            document.body.classList.remove('theme-red');
-            document.body.classList.add('theme-blue');
-            showNotification("yellow theme activated", 2000);
+            document.body.classList.remove('theme-green', 'theme-red', 'theme-orange', 'theme-aqua', 'theme-yellow');
+            document.body.classList.add('theme-yellow');
+            showNotification("Yellow theme activated", 2000);
         });
 
         document.getElementById('maximize-btn').addEventListener('click', function(e) {
             e.stopPropagation(); // Prevent the click from bubbling up
-            document.body.classList.remove('theme-red', 'theme-blue');
+            document.body.classList.remove('theme-green', 'theme-red', 'theme-orange', 'theme-aqua', 'theme-yellow');
+            document.body.classList.add('theme-green');
             showNotification("Default theme restored", 2000);
         });
 
